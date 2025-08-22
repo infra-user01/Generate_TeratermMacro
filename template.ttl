@@ -44,5 +44,18 @@ strconcat logfile datetime
 
 logopen logfile 0 0
 
+wait '#' '$' 'password:'
+if result =1 || result = 2 then
 pause 3
 sendln 'uname -n ; id ; date'
+
+elseif result = 3 then
+messagebox 'Current Password Expired. Please set a new password.' 'Passowrd Expired'
+end
+
+elseif result = 0 then
+messagebox 'Timeout: Unexpected Error is occured.' 'Timeout'
+end
+endif
+
+end
