@@ -1,0 +1,48 @@
+HOST='{HOST}'
+PORT='22'
+USERNAME='{USERNAME}'
+PASSWORD='{PASSWORD}'
+
+INI_DIR='99_ini'
+INI_FILENAME='{INI_FILENAME}'
+
+LOG_DIRNAME='log'
+LOG_FILENAME_DATETIME='%Y%m%d_%H%M%S_&h.log'
+
+TITLE='{TITLE}'
+
+getdir MACRO_DIR
+
+ini_file_path=MACRO_DIR
+strconcat ini_file_path '\'
+strconcat ini_file_path INI_DIR
+strconcat ini_file_path '\'
+strconcat ini_file_path INI_FILENAME
+
+command=HOST
+strconcat command ':'
+strconcat command PORT
+strconcat command ' /ssh /2 /auth=password /user='
+strconcat command USERNAME
+strconcat command ' /passwd='
+strconcat command PASSWORD
+strconcat command ' /F='
+strconcat command ini_file_path
+
+connect command
+settitle TITLE
+
+log_dir=MACRO_DIR
+strconcat log_dir '\'
+strconcat log_dir LOG_DIRNAME
+
+getdate datetime LOG_FILENAME_DATETIME
+
+logfile=log_dir
+strconcat logfile '\'
+strconcat logfile datetime
+
+logopen logfile 0 0
+
+pause 3
+sendln 'uname -n ; id ; date'
