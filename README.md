@@ -1,4 +1,5 @@
-README.md
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+![Python 3.13](https://img.shields.io/badge/python-3.13-blue.svg)
 # Generate_TeratermMacro
 
 A Python tool that generates Tera Term macro files (.ttl) from a CSV.
@@ -48,15 +49,15 @@ If INI_FILE is AIX → uses AIX_TERATERM.INI
 
 - When provided, the generated macro filename will be:
 
-  root@<DISPLAY_NAME>(<HOST>).ttl
+  `<USERNAME>@<DISPLAY_NAME>(<HOST>)`.ttl
 
-  and the Tera Term window title will show <DISPLAY_NAME>(<HOST>).
+  and the Tera Term window title will show `<DISPLAY_NAME>(<HOST>)`.
 
 - When empty, the filename will be:
 
-  root@<HOST>.ttl
+  `<USERNAME>@<HOST>`.ttl
 
-  and the window title will be <HOST>.
+  and the Tera Term window title will show `<HOST>`.
 
 #### Example CSV
 

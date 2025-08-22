@@ -7,7 +7,7 @@ import os
 class MacroGeneratorApp:
     def __init__(self, root):
         self.root = root
-        root.title("Tera Term マクロ生成ツール v1.2")
+        root.title("Tera Term マクロ生成ツール v1.1")
         root.geometry("750x550")
 
         self.template_path = tk.StringVar()
