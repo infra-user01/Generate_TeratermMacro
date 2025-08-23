@@ -119,11 +119,21 @@ python macro_gui.py
 ---
 ### Version History
 
-- v1.0 — Initial release
+- **v1.1.2**
+  - [Fix] Added CSV header validation in GUI mode. Errors are shown if the header is missing or data rows are empty.
+  - [Fix] CUI mode exits with code 1 when no macros are generated.
+  - [Docs] Updated README with CSV notes and usage details.
 
-- v1.1 — Bug fixes & enhancements
+- **v1.1.1**
+  - [Docs] Added README.md with usage instructions and CSV format examples.
+  - [Misc] Added `.gitignore` to exclude `__pycache__/`.
 
-- v1.1.1 — Added README.md (usage & CSV format)
+- **v1.1**
+  - [Fix] Modify template.ttl
+  - [Fix] Modify macro_gui.py
+
+- **v1.0**
+  - Initial release
 
 ---
 ### License
