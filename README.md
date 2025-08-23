@@ -21,7 +21,7 @@ cd Generate_TeratermMacro
 ```
 ### 2) Prepare a CSV
 
-Header (5 columns, in this order):
+#### Header (5 columns, in this order):
 
 HOST,USERNAME,PASSWORD,INI_FILE,DISPLAY_NAME
 
@@ -31,6 +31,8 @@ HOST,USERNAME,PASSWORD,INI_FILE,DISPLAY_NAME
 - **PASSWORD**: password (plain text)
 - **INI_FILE**: platform key, mapped to a specific Tera Term INI file
 - **DISPLAY_NAME**: description / label for the server
+
+#### INI_FILE behavior
 
 ```python
 INI mapping (used by the tool):
@@ -44,6 +46,7 @@ INI_MAP = {
 If INI_FILE is Linux → uses LNX_TERATERM.INI
 
 If INI_FILE is AIX → uses AIX_TERATERM.INI
+
 
 #### DISPLAY_NAME behavior
 
@@ -60,14 +63,17 @@ If INI_FILE is AIX → uses AIX_TERATERM.INI
   and the Tera Term window title will show `<HOST>`.
 
 #### Example CSV
-
+```csv
 HOST,USERNAME,PASSWORD,INI_FILE,DISPLAY_NAME
-
 server1,root,passw0rd,Linux,WEBserver1
-
 server2,root,passw0rd,AIX,DB01
+server3,root,passw0rd,Linux
+```
 
-server3,root,passw0rd,Linux,
+#### Notes on CSV
+- The CSV **must** include the header line shown above.
+- At least one data row is required. If the CSV only contains the header with no rows, generation will fail.
+- In CUI mode, if no macros are generated (due to missing header or empty data), the program will exit with code 1.
 
 ### 3) Run (CLI)
 

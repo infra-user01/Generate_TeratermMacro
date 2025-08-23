@@ -41,6 +41,8 @@ class MacroGeneratorApp:
         tk.Label(self.tab_text, text="ここにCSVデータを直接入力してください", bg="#fff8dc").pack(anchor='w', padx=5, pady=5)
         self.csv_text = scrolledtext.ScrolledText(self.tab_text, height=10)
         self.csv_text.pack(fill='both', expand=True, padx=5, pady=5)
+        # ★ 直接入力欄にヘッダーをデフォルト挿入
+        self.csv_text.insert("1.0", "HOST,USERNAME,PASSWORD,INI_FILE,DISPLAY_NAME\n")
 
         # ログ出力
         tk.Label(self.root, text="ログ出力:").pack(anchor='w', padx=10, pady=(5,0))
@@ -117,13 +119,21 @@ class MacroGeneratorApp:
                 self.log_text.insert(tk.END, msg + "\n")
                 self.log_text.see(tk.END)
 
-            generate_and_save_all(
+            cnt = generate_and_save_all(
                 self.template_path.get(),
                 csv_source,
                 self.output_dir.get(),
                 log_func=log
+                csv_encoding='utf-8'   # GUIの直接入力はUTF-8で一時ファイル化しているため
             )
-            messagebox.showinfo("完了", "マクロの生成が完了しました！")
+            
+            if cnt > 0:
+                messagebox.showinfo("完了", f"マクロの生成が完了しました（{cnt} 件）。")
+            else:
+                messagebox.showwarning(
+                    "生成なし",
+                    "生成されたファイルはありません。\nCSVヘッダー不足やデータ未入力の可能性があります。"
+                )
 
         except Exception as e:
             messagebox.showerror("エラー", f"マクロ生成中にエラーが発生しました:\n{e}")
@@ -134,16 +144,19 @@ class MacroGeneratorApp:
                 os.unlink(tmp_path)
 
     def on_tab_change(self, event):
-        # タブ切替時に背景色変更＆入力内容クリアで誤入力防止
         current_tab = self.tab_control.index(self.tab_control.select())
-
+    
         if current_tab == 0:
-            # CSVファイル入力モード → 直接入力欄をクリア
-            self.csv_text.delete("1.0", tk.END)
+            # CSVファイル入力モード
+            # ※ ここでは self.csv_text を消さない（ユーザー入力保護）
+            pass
         else:
-            # 直接入力モード → CSVファイルパスをクリア
-            self.csv_path.set("")
-
+            # 直接入力モード
+            self.csv_path.set("")  # ファイルパスはクリア
+            # 空ならヘッダーを自動挿入
+            if not self.csv_text.get("1.0", "end-1c").strip():
+                self.csv_text.insert("1.0", "HOST,USERNAME,PASSWORD,INI_FILE,DISPLAY_NAME\n")
+    
         self._update_background_color()
 
     def _update_background_color(self):
