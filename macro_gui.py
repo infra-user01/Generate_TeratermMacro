@@ -123,7 +123,7 @@ class MacroGeneratorApp:
                 self.template_path.get(),
                 csv_source,
                 self.output_dir.get(),
-                log_func=log
+                log_func=log,
                 csv_encoding='utf-8'   # GUIの直接入力はUTF-8で一時ファイル化しているため
             )
             
